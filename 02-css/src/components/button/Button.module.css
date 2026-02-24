@@ -1,0 +1,58 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  border-radius: 12px;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #7c5ff5, #5b3fe0);
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    0 4px 20px rgba(100, 80, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Shine sweep on hover */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 140%;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 8px 32px rgba(100, 80, 255, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow:
+    0 2px 10px rgba(100, 80, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
