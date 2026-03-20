@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --surface: #10101a;
+  --border: #2a2a4a;
+  --accent: #00f5ff;
+  --accent2: #ff00aa;
+  --accent3: #7b2fff;
+  --text: #e0e0ff;
+  --text-muted: #6060a0;
+  --glow-cyan: 0 0 8px #00f5ff, 0 0 20px #00f5ff55;
+  --glow-pink: 0 0 8px #ff00aa, 0 0 20px #ff00aa55;
+  --glow-purple: 0 0 8px #7b2fff, 0 0 20px #7b2fff55;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridScroll 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 50px 50px; }
+}
+
+/* Scanline overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── App container ── */
+.app {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ── Header label ── */
+.app-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  position: relative;
+  /* Corner accents */
+  clip-path: polygon(
+    0 12px, 12px 0,
+    calc(100% - 12px) 0, 100% 12px,
+    100% calc(100% - 12px), calc(100% - 12px) 100%,
+    12px 100%, 0 calc(100% - 12px)
+  );
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, var(--accent), var(--accent3), var(--accent2));
+  clip-path: polygon(
+    0 12px, 12px 0,
+    calc(100% - 12px) 0, 100% 12px,
+    100% calc(100% - 12px), calc(100% - 12px) 100%,
+    12px 100%, 0 calc(100% - 12px)
+  );
+  z-index: -1;
+  opacity: 0.5;
+  animation: borderPulse 4s ease-in-out infinite;
+}
+
+@keyframes borderPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
+}
+
+/* ── Stats row ── */
+.stats {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--border), transparent);
+}
+
+/* ── Individual stat ── */
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 100px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+.stat-value.cyan {
+  color: var(--accent);
+  text-shadow: var(--glow-cyan);
+}
+
+.stat-value.pink {
+  color: var(--accent2);
+  text-shadow: var(--glow-pink);
+}
+
+/* Pulse on value change */
+.stat-value.pulse {
+  animation: valuePop 0.25s ease;
+}
+
+@keyframes valuePop {
+  0%   { transform: scale(1);    }
+  50%  { transform: scale(1.25); }
+  100% { transform: scale(1);    }
+}
+
+/* ── Button ── */
+.btn {
+  position: relative;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+  padding: 14px 48px;
+  clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+  box-shadow: var(--glow-cyan);
+}
+
+.btn:hover {
+  background: #00ccdd;
+  box-shadow: 0 0 16px #00f5ff, 0 0 40px #00f5ff77;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Shimmer sweep */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  clip-path: inherit;
+}
+
+.btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* ── Hint text ── */
+.hint {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.hint span {
+  color: var(--accent);
+}
