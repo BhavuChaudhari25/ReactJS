@@ -1,11 +1,16 @@
 import React from 'react'
 import styles from './Button.module.css'
 
-const Button = () => {
+const Button = ({ children, onClick, disabled, variant = 'primary', ...props }) => {
   return (
-    <div className={styles.btn}>
-        This is a button
-    </div>
+    <button 
+      className={`${styles.btn} ${styles[variant]}`}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
+    >
+      {children || 'Click me'}
+    </button>
   )
 }
 
